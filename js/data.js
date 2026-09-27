@@ -5,7 +5,7 @@
 
 const doctors = [
   {
-    id: "d01", name: "Neetee Bhardwaj", photoUrl: "assets/doctors/IMG_6971 - Neetee Bhardwaj.jpeg",
+    id: "d01", name: "Neetee", photoUrl: "assets/doctors/neetee.jpeg",
     title: "Psychologist & Counsellor", qualifications: "Master's in Clinical Psychology",
     experienceYears: 1, featured: true, specializationsTop: ["Anxiety & Panic","Stress Management","LGBTQIA+ Affirmative"],
     specializationsFull: ["Anxiety disorders","Sleep disorders","Stress management","Anger Management","Overthinking","Grief & Loss","OCD","Trauma","PTSD","Eating Disorders","Mood disorders","Adult ADHD","Work-Life balance","Parenting concerns","Academic concerns","Career confusion"],
@@ -16,7 +16,7 @@ const doctors = [
     price: "Contact for pricing", sessionDuration: "50 min", rating: null, reviewCount: 0
   },
   {
-    id: "d02", name: "Muskaan Kalra", photoUrl: "assets/doctors/IMG-20250819-WA0009 - Muskaan Kalra.jpg",
+    id: "d02", name: "Muskaan", photoUrl: "assets/doctors/muskaan.jpeg",
     title: "Counselling Psychologist", qualifications: "Master's in Clinical Psychology",
     experienceYears: 1, featured: true, specializationsTop: ["CBT & DBT","Expressive Art Therapy","Relationship Skills"],
     specializationsFull: ["CBT","DBT","Psychodynamic Therapy","Expressive Art Therapy","Internet/Social media dependence","Self improvement","Grief & Loss","Relationship skills","Academic concerns","Career confusion"],
@@ -98,7 +98,7 @@ const doctors = [
     price: "Contact for pricing", sessionDuration: "50 min", rating: null, reviewCount: 0
   },
   {
-    id: "d10", name: "Hiba", photoUrl: "assets/doctors/IMG_20260701_182932712_HDR - Hiba.jpg",
+    id: "d10", name: "Hiba", photoUrl: "assets/doctors/hiba.jpeg",
     title: "Psychologist & Counsellor", qualifications: "BA (Hons) Applied Psychology, MA Psychology (Clinical specialization)",
     experienceYears: 2, featured: true, specializationsTop: ["Clinical Psychology", "Relationship Skills", "Trauma & Resilience"],
     specializationsFull: ["Anxiety","Depression","Stress management","Grief & Loss","OCD","Schizophrenia","Trauma","PTSD","Eating Disorders","Bipolar disorder","Adult ADHD","Relationship skills","Parenting concerns"],
@@ -189,7 +189,7 @@ const doctors = [
     price: "Contact for pricing", sessionDuration: "50 min", rating: null, reviewCount: 0
   },
   {
-    id: "d19", name: "Samarth P Shetty", photoUrl: "assets/doctors/IMG-20251202-WA0021 - Peepal Tree.jpg",
+    id: "d19", name: "Samarth", photoUrl: "assets/doctors/samarat.jpeg",
     title: "Counselling Psychologist (Founder)", qualifications: "MA Psychology, Certified CBT (NIMHANS), Suicide Prevention & Life Skills",
     experienceYears: 15, featured: true, specializationsTop: ["15+ Yrs Practice","NIMHANS Certified","Geriatric & Family"],
     specializationsFull: ["Anxiety","Depression","Addiction","Trauma","PTSD","LGBTQIA+ concerns","Personality Disorders","Bipolar disorder","Geriatric Mental Health","Work-Life balance","Relationship skills","Family counselling"],

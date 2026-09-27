@@ -243,20 +243,42 @@ function initHomePage() {
   // Render "Meet Our Experts" Balanced 4-Card Grid (3-4 Featured Doctors)
   const expertsGrid = document.getElementById("experts-therapists-grid") || document.getElementById("featured-therapists-grid");
   if (expertsGrid) {
-    const list = ALL_DOCTORS_CACHE.length > 0 ? ALL_DOCTORS_CACHE : (typeof MYTRM_DATA !== "undefined" ? MYTRM_DATA.therapists : []);
+    const list = (ALL_DOCTORS_CACHE && ALL_DOCTORS_CACHE.length > 0) ? ALL_DOCTORS_CACHE : (typeof doctors !== "undefined" ? doctors : (typeof MYTRM_DATA !== "undefined" ? (MYTRM_DATA.therapists || MYTRM_DATA.doctors || []) : []));
     const fallbackImg = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800";
     
-    // Select 3-4 featured doctors
-    let featuredList = list.filter(t => t.featured === true);
-    if (featuredList.length === 0) {
-      featuredList = list.slice(0, 4);
-    } else {
-      featuredList = featuredList.slice(0, 4);
+    // Explicit 4 featured homepage profiles mapping (1. Hiba, 2. Muskaan, 3. Neetee, 4. Samarth)
+    const homepageProfileMap = {
+      "d10": { name: "Hiba", image: "assets/doctors/hiba.jpeg" },
+      "d02": { name: "Muskaan", image: "assets/doctors/muskaan.jpeg" },
+      "d01": { name: "Neetee", image: "assets/doctors/neetee.jpeg" },
+      "d19": { name: "Samarth", image: "assets/doctors/samarat.jpeg" }
+    };
+    const desiredOrder = ["d10", "d02", "d01", "d19"];
+
+    let featuredList = [];
+    desiredOrder.forEach(id => {
+      const found = list.find(item => String(item.id) === String(id));
+      if (found) {
+        featuredList.push(found);
+      }
+    });
+
+    if (featuredList.length < 4) {
+      const remaining = list.filter(t => t.featured === true || desiredOrder.includes(String(t.id)));
+      featuredList = remaining.slice(0, 4);
     }
 
     expertsGrid.className = "featured-experts-grid";
     expertsGrid.innerHTML = featuredList.map((t, idx) => {
-      let photo = t.photoUrl || t.photo || (t.photoFile ? 'assets/doctors/' + t.photoFile : fallbackImg);
+      const idKey = String(t.id);
+      const override = homepageProfileMap[idKey];
+
+      // NAME RULE: Display ONLY the first name, no Dr., Ms., Mrs. or surname
+      let displayName = override ? override.name : (t.name || "");
+      displayName = displayName.replace(/^(Dr\.|Ms\.|Mrs\.|Mr\.|Prof\.)\s+/i, "").trim().split(/\s+/)[0];
+
+      // IMAGE RULE: Use specified image paths exactly
+      let photo = override ? override.image : (t.photoUrl || t.photo || (t.photoFile ? 'assets/doctors/' + t.photoFile : fallbackImg));
       if (photo && photo.startsWith('/') && !photo.startsWith('//')) {
         photo = photo.substring(1);
       }
@@ -276,10 +298,10 @@ function initHomePage() {
         <div class="expert-card ${isFeatured ? 'expert-card-featured' : ''} expert-card-anim ${animDirClass}" onclick="window.location.href='therapist-profile.html?id=${t.id}'">
           ${isFeatured ? '<div class="expert-card-badge-top"><span class="badge badge-primary">Featured Specialist</span></div>' : ''}
           <div class="expert-card-img-container">
-            <img src="${photo}" alt="${t.name}" class="expert-card-img" loading="${idx === 0 ? 'eager' : 'lazy'}" />
+            <img src="${photo}" alt="${displayName}" class="expert-card-img" loading="${idx === 0 ? 'eager' : 'lazy'}" />
           </div>
           <div class="expert-card-content">
-            <h3 class="expert-card-name">${t.name}</h3>
+            <h3 class="expert-card-name">${displayName}</h3>
             <div class="expert-card-title">${titleUpper}</div>
             <p class="expert-card-quote">"${bioQuote}"</p>
             <div class="expert-card-tags">
