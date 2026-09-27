@@ -44,6 +44,14 @@ function initNavbar() {
       drawer.classList.remove("open");
       overlay.classList.remove("active");
     });
+
+    // Close drawer when clicking nav links
+    drawer.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        drawer.classList.remove("open");
+        overlay.classList.remove("active");
+      });
+    });
   }
 
   // Set active nav link based on URL
@@ -71,6 +79,19 @@ function initNavbar() {
     }
   });
 }
+
+// Global mobile drawer accordion handler
+window.toggleMobileAccordion = function(el) {
+  if (!el) return;
+  const content = el.nextElementSibling;
+  const arrow = el.querySelector("span");
+  if (content) {
+    content.classList.toggle("open");
+    if (arrow) {
+      arrow.textContent = content.classList.contains("open") ? "▴" : "▾";
+    }
+  }
+};
 
 function showToast(message, type = "info") {
   let container = document.querySelector(".toast-container");

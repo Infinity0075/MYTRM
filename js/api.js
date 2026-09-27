@@ -7,10 +7,10 @@
  * Example: "https://script.google.com/macros/s/AKfycbx.../exec"
  */
 
-const APPS_SCRIPT_URL = ""; // <-- PASTE YOUR DEPLOYED APPS SCRIPT URL HERE
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwSrx8Qo5G4aOFEcsUTLJCDSAR2yzQIKQihl8W4w6-mkwrLdYvegOaw4oZIskh5_6LuFg/exec";
 
 // Business WhatsApp Number (India country code + 10-digit number)
-const MYTRM_WHATSAPP_NUMBER = "919876543210";
+const MYTRM_WHATSAPP_NUMBER = "917206660864";
 
 // Fallback Default Image if local doctor photo file has not been copied into /assets/doctors/ yet
 const DEFAULT_AVATAR_FALLBACK = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800";
@@ -21,6 +21,53 @@ const FALLBACK_DOCTORS = (typeof doctors !== "undefined" && Array.isArray(doctor
 // ----------------------------------------------------------------------------
 // API CLIENT HELPER FUNCTIONS
 // ----------------------------------------------------------------------------
+
+/**
+ * Submit lead details to Google Apps Script Web App endpoint via x-www-form-urlencoded
+ */
+async function submitLeadToGoogleSheet(leadData) {
+  if (!APPS_SCRIPT_URL) {
+    return { success: false, error: "Apps Script Web App URL is not configured." };
+  }
+
+  // Honeypot anti-spam validation
+  if (leadData.website && leadData.website.trim() !== "") {
+    console.warn("[MYTRM Lead] Spam honeypot triggered.");
+    return { success: false, error: "Submission rejected." };
+  }
+
+  const payload = new URLSearchParams();
+  payload.append("name", leadData.name || "");
+  payload.append("phone", leadData.phone || "");
+  payload.append("email", leadData.email || "");
+  payload.append("service", leadData.service || "");
+  payload.append("message", leadData.message || "");
+  payload.append("source", leadData.source || "MYTRM Website");
+  payload.append("website", leadData.website || "");
+
+  try {
+    const response = await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: payload.toString()
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server returned status HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("[MYTRM Lead Submission Network Error]:", err);
+    return {
+      success: false,
+      error: "Network/CORS connection issue while submitting your request. Please try again or reach us on WhatsApp."
+    };
+  }
+}
 
 async function apiFetch(action, params = {}, method = "GET", bodyData = null) {
   if (!APPS_SCRIPT_URL) {
