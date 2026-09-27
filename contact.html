@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — MYTRM Support & Inquiries</title>
+  <meta name="description" content="Get in touch with MYTRM support team, inquire about therapist partnerships, or ask any questions regarding our mental health platform.">
+  
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Shared Navigation Bar -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo">
+        MYTRM<span class="dot"></span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <!-- Therapists Dropdown -->
+          <li class="nav-item">
+            <a href="therapists.html" class="nav-link">Therapists <span class="arrow">▾</span></a>
+            <div class="nav-dropdown">
+              <a href="therapists.html" class="dropdown-item">
+                Browse All Practitioners
+                <span class="desc">Filter verified clinical psychologists</span>
+              </a>
+              <div class="dropdown-header">By Concern</div>
+              <a href="therapists.html?category=anxiety" class="dropdown-item">Anxiety & Panic</a>
+              <a href="therapists.html?category=stress" class="dropdown-item">Work Stress & Burnout</a>
+              <a href="therapists.html?category=relationships" class="dropdown-item">Relationships & Communication</a>
+              <a href="therapists.html?category=self-esteem" class="dropdown-item">Self-Esteem & Identity</a>
+            </div>
+          </li>
+
+          <!-- Services Dropdown -->
+          <li class="nav-item">
+            <span class="nav-link">Services <span class="arrow">▾</span></span>
+            <div class="nav-dropdown">
+              <a href="therapists.html" class="dropdown-item">
+                Individual Therapy
+                <span class="desc">1-on-1 private video counseling</span>
+              </a>
+              <a href="therapists.html?category=relationships" class="dropdown-item">
+                Couples & Family Therapy
+                <span class="desc">Joint relationship guidance</span>
+              </a>
+              <a href="therapists.html?category=career" class="dropdown-item">
+                Career & Life Counseling
+                <span class="desc">Transitions & burnout relief</span>
+              </a>
+            </div>
+          </li>
+
+          <!-- Resources Dropdown -->
+          <li class="nav-item">
+            <span class="nav-link">Resources <span class="arrow">▾</span></span>
+            <div class="nav-dropdown">
+              <a href="index.html#faq" class="dropdown-item">Frequently Asked Questions</a>
+              <a href="contact.html" class="dropdown-item">Self-Help & Mental Health Tools</a>
+              <a href="contact.html" class="dropdown-item">Crisis Helplines (India)</a>
+            </div>
+          </li>
+
+          <!-- About Us Link -->
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">About Us & Support</a>
+          </li>
+
+          <!-- Contact Us Link -->
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link active">Contact Us</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Right Nav Actions (Phone, WhatsApp, Sign In / User Session, Mobile Hamburger) -->
+      <div class="nav-actions">
+        <!-- Rendered dynamically by auth.js -->
+        <button class="mobile-toggle" aria-label="Toggle drawer">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-overlay"></div>
+  <aside class="mobile-drawer">
+    <div>
+      <a href="index.html" class="brand-logo">MYTRM<span class="dot"></span></a>
+      <ul class="mobile-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="therapists.html">Find Therapists</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="dashboard.html">My Dashboard</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+    
+    <div class="text-center" style="max-width: 680px; margin: 0 auto;">
+      <span class="badge badge-primary" style="margin-bottom: 0.75rem;">We're Here for You</span>
+      <h1>How can we support you today?</h1>
+      <p style="font-size: 1.1rem; margin-top: 0.75rem;">
+        Whether you have questions about matching with a therapist, billing inquiries, or joining as a clinical partner — drop us a message.
+      </p>
+    </div>
+
+    <!-- Dual Contact Methods Grid (Left Info Cards Stack + Right Contact Form) -->
+    <div class="contact-dual-grid">
+      
+      <!-- Left Column: Compact Support Cards Stack -->
+      <div class="contact-left-col">
+        
+        <!-- Card 1: WhatsApp Support -->
+        <div class="contact-info-card wa-highlight">
+          <div class="contact-option-header" style="margin-bottom: 0.85rem;">
+            <div class="contact-option-icon wa">
+              <img src="assets/icons/whatsapp.svg" alt="WhatsApp" style="width: 28px; height: 28px; display: block;" />
+            </div>
+            <div>
+              <span class="badge badge-success" style="margin-bottom: 0.2rem; font-size: 0.75rem;">Instant Messaging</span>
+              <h3 style="font-size: 1.2rem; margin: 0; font-family: var(--font-heading);">Chat with us on WhatsApp</h3>
+            </div>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.55; margin-bottom: 1.1rem;">
+            Get a quick reply — usually within a few hours. Connect directly with our MYTRM client care team for instant booking support, session guidance, or platform inquiries.
+          </p>
+          <a id="contact-wa-btn" href="#" target="_blank" class="btn btn-sm btn-full" style="background-color: #25D366; color: #FFFFFF; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.65rem 1rem;">
+            <img src="assets/icons/whatsapp.svg" alt="WhatsApp" style="width: 20px; height: 20px; filter: brightness(0) invert(1);" />
+            Chat on WhatsApp &rarr;
+          </a>
+          <div style="font-size: 0.775rem; color: var(--color-text-subtle); text-align: center; margin-top: 0.6rem;">
+            ⚡ Available Mon–Sat, 9am–8pm IST
+          </div>
+        </div>
+
+        <!-- Card 2: Email Support -->
+        <div class="contact-info-card">
+          <div style="display: flex; align-items: flex-start; gap: 0.85rem;">
+            <div class="contact-option-icon" style="width: 44px; height: 44px; background: var(--color-primary-light); color: var(--color-primary); font-size: 1.25rem;">
+              ✉️
+            </div>
+            <div style="flex: 1;">
+              <span class="badge badge-primary" style="margin-bottom: 0.2rem; font-size: 0.75rem;">Official Support</span>
+              <h4 style="font-size: 1.1rem; margin: 0 0 0.35rem 0; font-family: var(--font-heading);">Email Support</h4>
+              <p style="font-size: 0.875rem; color: var(--color-text-subtle); margin-bottom: 0.6rem; line-height: 1.45;">
+                For detailed inquiries, partnership requests, or documentation.
+              </p>
+              <a href="mailto:support@mytrm.in" style="color: var(--color-primary); font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                support@mytrm.in &rarr;
+              </a>
+              <div style="font-size: 0.75rem; color: var(--color-text-subtle); margin-top: 0.35rem;">⏱️ Response within 24–48 hours</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: 24/7 Helpline Support -->
+        <div class="contact-info-card">
+          <div style="display: flex; align-items: flex-start; gap: 0.85rem;">
+            <div class="contact-option-icon" style="width: 44px; height: 44px; background: #FFF3E0; color: #E65100; font-size: 1.25rem;">
+              📞
+            </div>
+            <div style="flex: 1;">
+              <span class="badge" style="background: #FFE0B2; color: #E65100; margin-bottom: 0.2rem; font-size: 0.75rem;">24/7 Helpline</span>
+              <h4 style="font-size: 1.1rem; margin: 0 0 0.35rem 0; font-family: var(--font-heading);">Client Helpline</h4>
+              <p style="font-size: 0.875rem; color: var(--color-text-subtle); margin-bottom: 0.6rem; line-height: 1.45;">
+                Speak with our client support team for immediate phone guidance.
+              </p>
+              <a href="tel:+9118008906987" style="color: var(--color-primary); font-weight: 700; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none;">
+                +91 1800-890-MYTRM &rarr;
+              </a>
+              <div style="font-size: 0.75rem; color: var(--color-text-subtle); margin-top: 0.35rem;">Toll-free student & client line</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Support Hours & Location -->
+        <div class="contact-info-card">
+          <div style="display: flex; align-items: flex-start; gap: 0.85rem;">
+            <div class="contact-option-icon" style="width: 44px; height: 44px; background: #E3F2FD; color: #1565C0; font-size: 1.25rem;">
+              🏢
+            </div>
+            <div style="flex: 1;">
+              <h4 style="font-size: 1.1rem; margin: 0 0 0.35rem 0; font-family: var(--font-heading);">Support Hours & Office</h4>
+              <div style="font-size: 0.875rem; color: var(--color-text-main); margin-bottom: 0.35rem;">
+                <strong>Operating Hours:</strong> Mon–Sat, 9:00 AM – 8:00 PM IST
+              </div>
+              <div style="font-size: 0.825rem; color: var(--color-text-subtle); line-height: 1.45;">
+                <strong>Headquarters:</strong> Indiranagar, 100ft Road, Bengaluru, KA 560038
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Contact Form -->
+      <div class="contact-option-card" id="contact-form-wrapper">
+        <div class="contact-option-header">
+          <div class="contact-option-icon">
+            <span style="font-size: 1.5rem;">✉️</span>
+          </div>
+          <div>
+            <span class="badge badge-primary" style="margin-bottom: 0.25rem;">Official Inquiry</span>
+            <h3 style="font-size: 1.35rem; margin: 0;">Send us a message</h3>
+          </div>
+        </div>
+
+        <p style="font-size: 0.95rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 1.5rem;">
+          Prefer email? Fill in your details below and our support specialists will log your inquiry and respond to you via email.
+        </p>
+
+        <form id="contact-form" onsubmit="handleContactSubmit(event)" novalidate>
+          <div class="form-group">
+            <label for="contact-name" class="form-label">Full Name *</label>
+            <input type="text" id="contact-name" class="form-control" placeholder="e.g. Ananya Roy" required />
+          </div>
+
+          <div class="form-group">
+            <label for="contact-email" class="form-label">Email Address *</label>
+            <input type="email" id="contact-email" class="form-control" placeholder="ananya@example.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="contact-phone" class="form-label">Phone Number (Optional)</label>
+            <input type="tel" id="contact-phone" class="form-control" placeholder="+91 98765 43210" />
+          </div>
+
+          <div class="form-group">
+            <label for="contact-subject" class="form-label">Subject Category *</label>
+            <select id="contact-subject" class="form-control">
+              <option value="General Inquiry">General Inquiry</option>
+              <option value="Therapist Partnership">Therapist Partnership</option>
+              <option value="Billing & Refunds">Billing & Refunds</option>
+              <option value="Technical Issue">Technical Issue</option>
+              <option value="Feedback">Feedback</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-message" class="form-label">Message *</label>
+            <textarea id="contact-message" class="form-control" placeholder="Tell us how we can assist you..." required></textarea>
+          </div>
+
+          <button type="submit" id="contact-submit-btn" class="btn btn-primary btn-lg btn-full" style="margin-top: 1rem;">
+            Send Message &rarr;
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Emergency & Crisis Support Banner -->
+    <div style="background: #FFF5F5; border: 1px solid #FED7D7; border-radius: var(--radius-lg); padding: 1.75rem 2rem; margin-top: 1rem; display: flex; align-items: center; gap: 1.5rem;" class="emergency-crisis-banner">
+      <div style="width: 48px; height: 48px; border-radius: 50%; background: #FED7D7; color: #C53030; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;">
+        🚨
+      </div>
+      <div>
+        <h4 style="color: #C53030; margin-bottom: 0.35rem; font-size: 1.05rem; font-family: var(--font-heading);">Emergency & Crisis Support</h4>
+        <p style="font-size: 0.9rem; color: #742A2A; line-height: 1.5; margin: 0;">
+          MYTRM is an appointment-based therapy platform and is not designed for immediate crisis situations. If you or someone you know is in immediate danger or experiencing a mental health crisis, please contact <strong>Tele-MANAS (14416)</strong> or <strong>KIRAN (1800-599-0019)</strong> immediately for 24/7 free government crisis counseling in India.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo" style="color: #FFFFFF;">MYTRM<span class="dot"></span></a>
+          <p>A modern mental health platform empowering young adults in India with accessible, warm, and confidential therapy.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="therapists.html">Find Therapists</a></li>
+            <li><a href="dashboard.html">Client Dashboard</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Specializations</h4>
+          <ul class="footer-links">
+            <li><a href="therapists.html?category=anxiety">Anxiety & Panic</a></li>
+            <li><a href="therapists.html?category=stress">Work Stress & Burnout</a></li>
+            <li><a href="therapists.html?category=relationships">Relationships</a></li>
+            <li><a href="therapists.html?category=self-esteem">Self-Esteem</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Account & Support</h4>
+          <ul class="footer-links">
+            <li><a href="login.html">Client Login</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+            <li>
+              <a href="#" class="footer-wa-link" target="_blank" style="display: inline-flex; align-items: center; gap: 0.35rem; color: #25D366; font-weight: 600;">
+                <img src="assets/icons/whatsapp.svg" alt="WhatsApp" style="width: 16px; height: 16px;" /> Chat on WhatsApp
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 MYTRM Health Technologies Pvt. Ltd. All rights reserved.</div>
+        <div>Made with care for India's youth.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const waNumber = typeof MYTRM_WHATSAPP_NUMBER !== "undefined" ? MYTRM_WHATSAPP_NUMBER : "919876543210";
+      const prefilledText = encodeURIComponent("Hi MYTRM, I have a question");
+      const waUrl = `https://wa.me/${waNumber}?text=${prefilledText}`;
+      
+      const btn = document.getElementById("contact-wa-btn");
+      if (btn) btn.href = waUrl;
+
+      document.querySelectorAll(".footer-wa-link").forEach(link => {
+        link.href = waUrl;
+      });
+    });
+
+    async function handleContactSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById("contact-name").value.trim();
+      const email = document.getElementById("contact-email").value.trim();
+      const phone = document.getElementById("contact-phone").value.trim();
+      const subject = document.getElementById("contact-subject").value;
+      const message = document.getElementById("contact-message").value.trim();
+
+      if (!name || !email || !message) {
+        showToast("Please complete all required fields", "warning");
+        return;
+      }
+
+      const btn = document.getElementById("contact-submit-btn");
+      btn.innerText = "Submitting...";
+      btn.disabled = true;
+
+      const res = await apiSubmitContactForm({ name, email, phone, subject, message });
+
+      btn.disabled = false;
+      btn.innerText = "Send Message →";
+
+      if (res.success) {
+        const formCard = document.getElementById("contact-form-wrapper");
+        formCard.innerHTML = `
+          <div style="text-align: center; padding: 2.5rem 1rem;">
+            <div style="width: 64px; height: 64px; background: var(--color-success-bg); color: var(--color-success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.25rem auto;">
+              ✓
+            </div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Message Received!</h3>
+            <p style="font-size: 0.95rem; color: var(--color-text-muted); line-height: 1.6; max-width: 400px; margin: 0 auto 1.5rem auto;">
+              Thanks — we've received your message and will get back to you within 24-48 hours.
+            </p>
+            <a href="index.html" class="btn btn-primary">Return to Homepage</a>
+          </div>
+        `;
+      } else {
+        showToast(res.error || "Submission failed", "warning");
+      }
+    }
+  </script>
+</body>
+</html>

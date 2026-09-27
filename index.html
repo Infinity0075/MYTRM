@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MYTRM — Modern Mental Health Therapy & Counseling Platform</title>
+  <meta name="description" content="Connect with certified clinical psychologists & therapists in India. Accessible, confidential, and comfortable online therapy for Gen Z and young professionals.">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Shared Navigation Bar -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo" id="main-brand-logo">
+        MYTRM<span class="dot"></span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <!-- Therapists Dropdown -->
+          <li class="nav-item">
+            <a href="therapists.html" class="nav-link active">Therapists <span class="arrow">▾</span></a>
+            <div class="nav-dropdown">
+              <a href="therapists.html" class="dropdown-item">
+                Browse All Practitioners
+                <span class="desc">Filter verified clinical psychologists</span>
+              </a>
+              <div class="dropdown-header">By Concern</div>
+              <a href="therapists.html?category=anxiety" class="dropdown-item">Anxiety & Panic</a>
+              <a href="therapists.html?category=stress" class="dropdown-item">Work Stress & Burnout</a>
+              <a href="therapists.html?category=relationships" class="dropdown-item">Relationships & Communication</a>
+              <a href="therapists.html?category=self-esteem" class="dropdown-item">Self-Esteem & Identity</a>
+            </div>
+          </li>
+
+          <!-- Services Dropdown -->
+          <li class="nav-item">
+            <span class="nav-link">Services <span class="arrow">▾</span></span>
+            <div class="nav-dropdown">
+              <a href="therapists.html" class="dropdown-item">
+                Individual Therapy
+                <span class="desc">1-on-1 private video counseling</span>
+              </a>
+              <a href="therapists.html?category=relationships" class="dropdown-item">
+                Couples & Family Therapy
+                <span class="desc">Joint relationship guidance</span>
+              </a>
+              <a href="therapists.html?category=career" class="dropdown-item">
+                Career & Life Counseling
+                <span class="desc">Transitions & burnout relief</span>
+              </a>
+            </div>
+          </li>
+
+          <!-- Resources Dropdown -->
+          <li class="nav-item">
+            <span class="nav-link">Resources <span class="arrow">▾</span></span>
+            <div class="nav-dropdown">
+              <a href="#faq" class="dropdown-item">Frequently Asked Questions</a>
+              <a href="contact.html" class="dropdown-item">Self-Help & Mental Health Tools</a>
+              <a href="contact.html" class="dropdown-item">Crisis Helplines (India)</a>
+            </div>
+          </li>
+
+          <!-- About Us Link -->
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">About Us & Support</a>
+          </li>
+
+          <!-- Contact Us Link -->
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link">Contact Us</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Right Nav Actions (Phone, WhatsApp, Sign In / User Session, Mobile Hamburger) -->
+      <div class="nav-actions">
+        <!-- Rendered dynamically by auth.js -->
+        <button class="mobile-toggle" aria-label="Toggle navigation drawer">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Overlay & Menu -->
+  <div class="drawer-overlay"></div>
+  <aside class="mobile-drawer">
+    <div>
+      <a href="index.html" class="brand-logo">MYTRM<span class="dot"></span></a>
+      
+      <ul class="mobile-nav-links">
+        <li><a href="index.html">Home</a></li>
+        
+        <!-- Mobile Accordion: Therapists -->
+        <li>
+          <div class="mobile-accordion-title" onclick="toggleMobileAccordion(this)">
+            Therapists <span>▾</span>
+          </div>
+          <div class="mobile-accordion-content">
+            <a href="therapists.html">Browse All Therapists</a>
+            <a href="therapists.html?category=anxiety">Anxiety & Panic</a>
+            <a href="therapists.html?category=stress">Work Stress</a>
+            <a href="therapists.html?category=relationships">Relationships</a>
+          </div>
+        </li>
+
+        <!-- Mobile Accordion: Services -->
+        <li>
+          <div class="mobile-accordion-title" onclick="toggleMobileAccordion(this)">
+            Services <span>▾</span>
+          </div>
+          <div class="mobile-accordion-content">
+            <a href="therapists.html">Individual Therapy</a>
+            <a href="therapists.html?category=relationships">Couples Therapy</a>
+            <a href="therapists.html?category=career">Career Counseling</a>
+          </div>
+        </li>
+
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="login.html">Sign In</a></li>
+        <li><a href="signup.html">Create Account</a></li>
+      </ul>
+    </div>
+    <div style="margin-top: 2rem;">
+      <a href="therapists.html" class="btn btn-primary btn-full btn-lg">Book a Session</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="badge badge-primary" style="margin-bottom: 1.25rem;">Modern Mental Healthcare in India</span>
+          <h1>Therapy that feels <span>comfortable</span>, warm, and empowering.</h1>
+          <p class="hero-subtitle">
+            Connect with top licensed Indian psychologists for anxiety, stress, relationships, and personal growth. Flexible online sessions tailored for young adults and students.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="therapists.html" class="btn btn-primary btn-lg" id="hero-find-therapist-btn">Find Your Therapist &rarr;</a>
+            <a href="#how-it-works" class="btn btn-secondary btn-lg">How It Works</a>
+          </div>
+
+          <div class="hero-trust-bar">
+            <div class="trust-avatars">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" alt="Client photo" class="trust-avatar">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200" alt="Client photo" class="trust-avatar">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=200" alt="Client photo" class="trust-avatar">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" alt="Client photo" class="trust-avatar">
+            </div>
+            <div class="trust-text">
+              <strong>12,000+ sessions booked</strong> by young professionals across India.
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento Composition Hero Media -->
+        <div class="hero-media-bento">
+          <div class="bento-img-main">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=1000" alt="Indian woman professional smiling in therapy room" loading="eager">
+          </div>
+          <div class="bento-img-sub">
+            <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&q=80&w=600" alt="Therapist listening warmly" loading="eager">
+          </div>
+          <div class="bento-img-sub">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=600" alt="Young adult feeling relieved" loading="eager">
+          </div>
+
+          <div class="hero-stat-card">
+            <div class="stat-icon">★</div>
+            <div>
+              <div style="font-weight: 800; font-size: 1.1rem; color: var(--color-text-main);">4.93 / 5.0</div>
+              <div style="font-size: 0.8rem; color: var(--color-text-subtle);">Verified Client Rating</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Concern/Condition Cards: What are you going through? -->
+    <section style="padding: 4.5rem 0; background-color: var(--color-bg-page);">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge badge-sand" style="margin-bottom: 0.5rem;">Tailored Support</span>
+          <h2>What are you going through?</h2>
+          <p>Choose an area of focus to find specialists with proven experience in your specific challenges.</p>
+        </div>
+
+        <div class="concern-cards-grid" id="homepage-categories-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Meet Our Experts Bento Section -->
+    <section class="experts-grid-section" id="experts-section">
+      <div class="container">
+        <div class="section-header center" style="margin-bottom: 2.5rem;">
+          <span class="badge badge-primary" style="margin-bottom: 0.5rem;">Handpicked Clinical Leaders</span>
+          <h2>A Few of the Experts You'll Meet</h2>
+          <p>Verified clinical psychologists and counsellors dedicated to your personal growth and emotional well-being.</p>
+        </div>
+
+        <div class="featured-experts-grid" id="featured-therapists-grid">
+          <!-- Rendered via JS -->
+        </div>
+
+        <div class="experts-cta-container">
+          <a href="therapists.html" class="btn btn-primary btn-lg" id="experts-find-therapist-btn">Find Your Therapist &rarr;</a>
+          <a href="contact.html" class="experts-join-link">Are you a therapist? Join MYTRM &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How Mytrm Works -->
+    <section id="how-it-works" style="padding: 5rem 0; background-color: var(--color-bg-page);">
+      <div class="container">
+        <div class="section-header center">
+          <span class="badge badge-sand" style="margin-bottom: 0.5rem;">Simple & Seamless</span>
+          <h2>How MYTRM Works</h2>
+          <p>Getting started with therapy should feel easy, transparent, and comforting.</p>
+        </div>
+
+        <div class="how-it-works-grid">
+          <div class="step-card">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=600" alt="Searching therapists" class="step-card-img" />
+            <div class="step-card-content">
+              <span class="step-number-tag">STEP 01</span>
+              <h3>Browse & Match</h3>
+              <p style="margin-top: 0.5rem;">Filter by concern, language, experience, or fee. View bios to find a practitioner you resonate with.</p>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=600" alt="Select date and time" class="step-card-img" />
+            <div class="step-card-content">
+              <span class="step-number-tag">STEP 02</span>
+              <h3>Select Slot & Request</h3>
+              <p style="margin-top: 0.5rem;">Select your preferred date and time. Confirm details and chat directly on WhatsApp to finalize payment.</p>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=600" alt="Join secure online session" class="step-card-img" />
+            <div class="step-card-content">
+              <span class="step-number-tag">STEP 03</span>
+              <h3>Connect Online</h3>
+              <p style="margin-top: 0.5rem;">Once confirmed, join your private Google Meet video call directly from your email or user dashboard.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section style="padding: 5rem 0; background-color: var(--color-secondary-sand);">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge badge-primary" style="margin-bottom: 0.5rem;">Real Experiences</span>
+          <h2>Loved by Young Professionals & Students</h2>
+          <p>Read how MYTRM has helped people across India take control of their mental well-being.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;" id="testimonials-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" style="padding: 5rem 0; background-color: var(--color-bg-page);">
+      <div class="container">
+        <div class="section-header center">
+          <span class="badge badge-sand" style="margin-bottom: 0.5rem;">Clear Answers</span>
+          <h2>Frequently Asked Questions</h2>
+          <p>Everything you need to know about booking, confidentiality, and sessions.</p>
+        </div>
+
+        <div class="faq-accordion" id="faq-accordion">
+          <!-- Rendered via JS -->
+        </div>
+
+        <div style="text-align: center; margin-top: 2.5rem; font-size: 1.05rem; color: var(--color-text-muted);">
+          Still have questions? <a href="contact.html" style="color: var(--color-primary); font-weight: 700; text-decoration: underline;">Contact our support team &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA Banner -->
+    <section class="container">
+      <div class="cta-banner">
+        <h2>Ready to prioritize your peace of mind?</h2>
+        <p>Take the first small step today. Choose from our verified practitioners and book your confidential session in under 2 minutes.</p>
+        <a href="therapists.html" class="btn btn-primary btn-lg" id="banner-cta-btn">Book Your Session Now &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo" style="color: #FFFFFF;">MYTRM<span class="dot"></span></a>
+          <p>A modern mental health platform empowering young adults in India with accessible, warm, and confidential therapy.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="therapists.html">Find Therapists</a></li>
+            <li><a href="dashboard.html">Client Dashboard</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Specializations</h4>
+          <ul class="footer-links">
+            <li><a href="therapists.html?category=anxiety">Anxiety & Panic</a></li>
+            <li><a href="therapists.html?category=stress">Work Stress & Burnout</a></li>
+            <li><a href="therapists.html?category=relationships">Relationships</a></li>
+            <li><a href="therapists.html?category=self-esteem">Self-Esteem</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Portal Access</h4>
+          <ul class="footer-links">
+            <li><a href="login.html?role=user">Client Login</a></li>
+            <li><a href="login.html?role=doctor">Doctor Portal</a></li>
+            <li><a href="login.html?role=admin">Admin Portal</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 MYTRM Health Technologies Pvt. Ltd. All rights reserved.</div>
+        <div>Made with care for India's youth.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+    function toggleMobileAccordion(el) {
+      const content = el.nextElementSibling;
+      content.classList.toggle("open");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Therapist Profile — MYTRM</title>
+  <meta name="description"
+    content="View therapist qualifications, specializations, reviews, and book an online session directly.">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body>
+
+  <!-- Shared Navigation Bar -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo">
+        MYTRM<span class="dot"></span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <!-- Therapists Dropdown -->
+          <li class="nav-item">
+            <a href="therapists.html" class="nav-link active">Therapists <span class="arrow">▾</span></a>
+            <div class="nav-dropdown">
+              <a href="therapists.html" class="dropdown-item">
+                Browse All Practitioners
+                <span class="desc">Filter verified clinical psychologists</span>
+              </a>
+              <div class="dropdown-header">By Concern</div>
+              <a href="therapists.html?category=anxiety" class="dropdown-item">Anxiety & Panic</a>
+              <a href="therapists.html?category=stress" class="dropdown-item">Work Stress & Burnout</a>
+              <a href="therapists.html?category=relationships" class="dropdown-item">Relationships & Communication</a>
+              <a href="therapists.html?category=self-esteem" class="dropdown-item">Self-Esteem & Identity</a>
+            </div>
+          </li>
+
+          <!-- Services Dropdown -->
+          <li class="nav-item">
+            <span class="nav-link">Services <span class="arrow">▾</span></span>
+            <div class="nav-dropdown">
+              <a href="therapists.html" class="dropdown-item">
+                Individual Therapy
+                <span class="desc">1-on-1 private video counseling</span>
+              </a>
+              <a href="therapists.html?category=relationships" class="dropdown-item">
+                Couples & Family Therapy
+                <span class="desc">Joint relationship guidance</span>
+              </a>
+              <a href="therapists.html?category=career" class="dropdown-item">
+                Career & Life Counseling
+                <span class="desc">Transitions & burnout relief</span>
+              </a>
+            </div>
+          </li>
+
+          <!-- Resources Dropdown -->
+          <li class="nav-item">
+            <span class="nav-link">Resources <span class="arrow">▾</span></span>
+            <div class="nav-dropdown">
+              <a href="index.html#faq" class="dropdown-item">Frequently Asked Questions</a>
+              <a href="contact.html" class="dropdown-item">Self-Help & Mental Health Tools</a>
+              <a href="contact.html" class="dropdown-item">Crisis Helplines (India)</a>
+            </div>
+          </li>
+
+          <!-- About Us Link -->
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">About Us & Support</a>
+          </li>
+
+          <!-- Contact Us Link -->
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link">Contact Us</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Right Nav Actions (Phone, WhatsApp, Sign In / User Session, Mobile Hamburger) -->
+      <div class="nav-actions">
+        <!-- Rendered dynamically by auth.js -->
+        <button class="mobile-toggle" aria-label="Toggle drawer">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-overlay"></div>
+  <aside class="mobile-drawer">
+    <div>
+      <a href="index.html" class="brand-logo">MYTRM<span class="dot"></span></a>
+      <ul class="mobile-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="therapists.html">Find Therapists</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="dashboard.html">My Dashboard</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="login.html">Log In</a></li>
+        <li><a href="signup.html">Create Account</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="container" style="padding-bottom: 5rem;">
+
+    <!-- Breadcrumb -->
+    <div style="margin-top: 1.5rem; font-size: 0.875rem; color: var(--color-text-subtle);">
+      <a href="index.html">Home</a> &rsaquo; <a href="therapists.html">Therapists</a> &rsaquo; <span
+        style="color: var(--color-text-main); font-weight: 600;">Therapist Profile</span>
+    </div>
+
+    <!-- Profile Grid Layout -->
+    <div class="profile-grid">
+
+      <!-- Left Main Profile Card -->
+      <article class="profile-main-card" id="profile-main-container">
+        <!-- Rendered dynamically via script.js -->
+      </article>
+
+      <!-- Right Sticky Booking Card -->
+      <aside class="sticky-booking-sidebar" id="profile-sidebar-container">
+        <!-- Rendered dynamically via script.js -->
+      </aside>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo" style="color: #FFFFFF;">MYTRM<span class="dot"></span></a>
+          <p>A modern mental health platform empowering young adults in India with accessible, warm, and confidential
+            therapy.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="therapists.html">Find Therapists</a></li>
+            <li><a href="dashboard.html">Client Dashboard</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Specializations</h4>
+          <ul class="footer-links">
+            <li><a href="therapists.html?category=anxiety">Anxiety & Panic</a></li>
+            <li><a href="therapists.html?category=stress">Work Stress & Burnout</a></li>
+            <li><a href="therapists.html?category=relationships">Relationships</a></li>
+            <li><a href="therapists.html?category=self-esteem">Self-Esteem</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Account & Legal</h4>
+          <ul class="footer-links">
+            <li><a href="login.html">Client Login</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+            <li><a href="contact.html">Therapist Partnership</a></li>
+            <li><a href="contact.html">Privacy & Security</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 MYTRM Health Technologies Pvt. Ltd. All rights reserved.</div>
+        <div>Made with care for India's youth.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/script.js"></script>
+</body>
+
+</html>

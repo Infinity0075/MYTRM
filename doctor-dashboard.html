@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Portal Dashboard — MYTRM</title>
+  <meta name="description" content="View your upcoming therapy sessions, patient details, and Google Meet video room links.">
+  
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo">
+        MYTRM<span class="dot"></span> <span class="badge badge-primary" style="font-size: 0.75rem;">DOCTOR</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="therapists.html" class="nav-link">Find Therapists</a></li>
+          <li><a href="doctor-dashboard.html" class="nav-link active">Doctor Dashboard</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Rendered by auth.js -->
+        <button class="mobile-toggle" aria-label="Toggle drawer">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-overlay"></div>
+  <aside class="mobile-drawer">
+    <div>
+      <a href="index.html" class="brand-logo">MYTRM<span class="dot"></span></a>
+      <ul class="mobile-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="doctor-dashboard.html">Doctor Dashboard</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="container" style="padding-bottom: 5rem;">
+    
+    <!-- Doctor Welcome Header Card -->
+    <div class="dashboard-header" id="doctor-header-card" style="margin-top: 2rem;">
+      <div class="dashboard-user-info">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400" id="doctor-avatar" alt="Doctor photo" class="user-avatar" />
+        <div>
+          <h1 style="font-size: 1.6rem; margin-bottom: 0.2rem;" id="doctor-greeting">Welcome Doctor!</h1>
+          <p style="font-size: 0.9rem; color: var(--color-text-subtle);" id="doctor-email">Clinical Practitioner Portal</p>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <span class="badge badge-success" style="font-size: 0.85rem; padding: 0.5rem 1rem;">● Active Practice</span>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">Log Out</button>
+      </div>
+    </div>
+
+    <!-- Layout Grid: Upcoming Sessions (Left) + View-only Profile Card (Right) -->
+    <div style="display: grid; grid-template-columns: 1fr 340px; gap: 2rem; margin-top: 2.5rem;" id="doctor-portal-grid">
+      
+      <!-- Left Column: Upcoming Consultations -->
+      <section>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+          <h2>Upcoming Client Consultations</h2>
+          <button class="btn btn-secondary btn-sm" onclick="loadDoctorBookings()">🔄 Refresh List</button>
+        </div>
+
+        <div id="doctor-bookings-container">
+          <div style="text-align: center; padding: 3rem; color: var(--color-text-subtle);">
+            Loading consultations from database...
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: View-Only Doctor Profile Summary -->
+      <aside>
+        <div class="card" id="doctor-profile-summary">
+          <h3 style="font-size: 1.15rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--color-border);">
+            Practitioner Details (View-Only)
+          </h3>
+          <div id="doctor-summary-content" style="font-size: 0.9rem; line-height: 1.7;">
+            Loading details...
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>&copy; 2026 MYTRM Health Technologies Pvt. Ltd. Doctor Portal.</div>
+        <div>Confidential & Encrypted Clinical Interface</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      protectRoute(["DOCTOR"]);
+      const session = getCurrentSession();
+      if (session) {
+        document.getElementById("doctor-greeting").innerText = `Welcome, ${session.name}!`;
+        document.getElementById("doctor-email").innerText = `${session.email} • Verified Clinical Practitioner`;
+      }
+      loadDoctorBookings();
+      loadDoctorProfileSummary();
+    });
+
+    async function loadDoctorBookings() {
+      const container = document.getElementById("doctor-bookings-container");
+      const session = getCurrentSession();
+      const doctorId = session ? (session.doctorId || session.id) : "d01";
+
+      const bookings = await apiGetDoctorBookings(doctorId);
+
+      if (!bookings || bookings.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 3rem 1rem; background: var(--color-bg-card); border-radius: var(--radius-md); border: 1px dashed var(--color-border);">
+            <h4>No Upcoming Client Consultations</h4>
+            <p style="color: var(--color-text-subtle);">New Calendly bookings will automatically populate here.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          ${bookings.map(b => `
+            <div class="card" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
+              <div style="display: flex; align-items: center; gap: 1.25rem;">
+                <div style="width: 52px; height: 52px; background: var(--color-primary-light); color: var(--color-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 700;">
+                  👤
+                </div>
+                <div>
+                  <span class="badge badge-success" style="margin-bottom: 0.25rem;">${b.status || 'Confirmed'}</span>
+                  <h3 style="font-size: 1.15rem; margin: 0;">Patient Email: ${b.userEmail || 'Client'}</h3>
+                  <div style="font-size: 0.9rem; font-weight: 600; color: var(--color-text-main); margin-top: 0.3rem;">
+                    📅 Date: ${b.date} at ${b.time} (IST)
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <a href="${b.meetLink || 'https://meet.google.com/mytrm-session-room'}" target="_blank" class="btn btn-primary">
+                  🎥 Start Google Meet
+                </a>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    async function loadDoctorProfileSummary() {
+      const summaryBox = document.getElementById("doctor-summary-content");
+      const session = getCurrentSession();
+      const doctorId = session ? (session.doctorId || session.id) : "d01";
+
+      const doctors = await apiGetDoctors();
+      const doc = doctors.find(d => String(d.id).toLowerCase() === String(doctorId).toLowerCase()) || doctors[0];
+
+      if (doc) {
+        const fallbackImg = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800";
+        const photoSrc = doc.photoUrl || doc.photo || fallbackImg;
+        const feeText = (doc.price && doc.price !== "TBD" && !isNaN(Number(doc.price))) ? `₹${doc.price}` : "Contact for pricing";
+
+        const avatarImg = document.getElementById("doctor-avatar");
+        if (avatarImg) {
+          avatarImg.src = photoSrc;
+          avatarImg.onerror = function() { this.onerror = null; this.src = fallbackImg; };
+        }
+
+        let specs = [];
+        if (Array.isArray(doc.specializationsFull)) {
+          specs = doc.specializationsFull;
+        } else if (doc.specializationsFull) {
+          specs = String(doc.specializationsFull).split(";").map(s => s.trim()).filter(Boolean);
+        } else if (Array.isArray(doc.specializationsTop)) {
+          specs = doc.specializationsTop;
+        } else if (doc.specializationsTop) {
+          specs = String(doc.specializationsTop).split(";").map(s => s.trim()).filter(Boolean);
+        } else if (Array.isArray(doc.specializations)) {
+          specs = doc.specializations;
+        }
+
+        let langs = Array.isArray(doc.languages) ? doc.languages.join(", ") : String(doc.languages || "").split(";").join(", ");
+
+        summaryBox.innerHTML = `
+          <div style="margin-bottom: 0.75rem;">
+            <strong>Title:</strong> ${doc.title}
+          </div>
+          <div style="margin-bottom: 0.75rem;">
+            <strong>Qualifications:</strong> ${doc.qualification || doc.qualifications}
+          </div>
+          <div style="margin-bottom: 0.75rem;">
+            <strong>Experience:</strong> ${doc.experienceYears || 1} Years
+          </div>
+          <div style="margin-bottom: 0.75rem;">
+            <strong>Consultation Fee:</strong> ${feeText} / ${doc.sessionDuration || '50 mins'}
+          </div>
+          <div style="margin-bottom: 0.75rem;">
+            <strong>Location:</strong> ${doc.city ? doc.city + ', ' + doc.state : (doc.location || 'India')}
+          </div>
+          <div style="margin-bottom: 0.75rem;">
+            <strong>Availability:</strong> ${doc.availabilitySummary || 'Flexible'}
+          </div>
+          <div style="margin-bottom: 0.75rem;">
+            <strong>Specializations:</strong>
+            <div style="display:flex; flex-wrap:wrap; gap:0.3rem; margin-top:0.3rem;">
+              ${specs.slice(0, 6).map(s => `<span class="tag" style="font-size:0.775rem;">${s}</span>`).join("")}
+            </div>
+          </div>
+          <div style="margin-bottom: 0.75rem;">
+            <strong>Languages:</strong> ${langs}
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

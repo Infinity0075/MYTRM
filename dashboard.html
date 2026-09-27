@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Dashboard — MYTRM</title>
+  <meta name="description"
+    content="Manage your upcoming therapy appointments, past sessions, and saved favorite psychologists on MYTRM.">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body>
+
+  <!-- Shared Navigation Bar -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo">
+        MYTRM<span class="dot"></span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <!-- Therapists Dropdown -->
+          <li class="nav-item">
+            <a href="therapists.html" class="nav-link">Therapists <span class="arrow">▾</span></a>
+            <div class="nav-dropdown">
+              <a href="therapists.html" class="dropdown-item">
+                Browse All Practitioners
+                <span class="desc">Filter verified clinical psychologists</span>
+              </a>
+              <div class="dropdown-header">By Concern</div>
+              <a href="therapists.html?category=anxiety" class="dropdown-item">Anxiety & Panic</a>
+              <a href="therapists.html?category=stress" class="dropdown-item">Work Stress & Burnout</a>
+              <a href="therapists.html?category=relationships" class="dropdown-item">Relationships & Communication</a>
+              <a href="therapists.html?category=self-esteem" class="dropdown-item">Self-Esteem & Identity</a>
+            </div>
+          </li>
+
+          <!-- Services Dropdown -->
+          <li class="nav-item">
+            <span class="nav-link">Services <span class="arrow">▾</span></span>
+            <div class="nav-dropdown">
+              <a href="therapists.html" class="dropdown-item">
+                Individual Therapy
+                <span class="desc">1-on-1 private video counseling</span>
+              </a>
+              <a href="therapists.html?category=relationships" class="dropdown-item">
+                Couples & Family Therapy
+                <span class="desc">Joint relationship guidance</span>
+              </a>
+              <a href="therapists.html?category=career" class="dropdown-item">
+                Career & Life Counseling
+                <span class="desc">Transitions & burnout relief</span>
+              </a>
+            </div>
+          </li>
+
+          <!-- Resources Dropdown -->
+          <li class="nav-item">
+            <span class="nav-link">Resources <span class="arrow">▾</span></span>
+            <div class="nav-dropdown">
+              <a href="index.html#faq" class="dropdown-item">Frequently Asked Questions</a>
+              <a href="contact.html" class="dropdown-item">Self-Help & Mental Health Tools</a>
+              <a href="contact.html" class="dropdown-item">Crisis Helplines (India)</a>
+            </div>
+          </li>
+
+          <!-- About Us Link -->
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">About Us & Support</a>
+          </li>
+
+          <!-- Contact Us Link -->
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link">Contact Us</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Right Nav Actions (Phone, WhatsApp, Sign In / User Session, Mobile Hamburger) -->
+      <div class="nav-actions">
+        <!-- Rendered dynamically by auth.js -->
+        <button class="mobile-toggle" aria-label="Toggle drawer">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-overlay"></div>
+  <aside class="mobile-drawer">
+    <div>
+      <a href="index.html" class="brand-logo">MYTRM<span class="dot"></span></a>
+      <ul class="mobile-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="therapists.html">Find Therapists</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="dashboard.html">My Dashboard</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="container" style="padding-bottom: 5rem;">
+
+    <!-- User Welcome Header Card -->
+    <div class="dashboard-header">
+      <div class="dashboard-user-info">
+        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=400"
+          id="user-avatar-img" alt="Client avatar" class="user-avatar" />
+        <div>
+          <h1 style="font-size: 1.6rem; margin-bottom: 0.2rem;" id="dashboard-user-greeting">Welcome back!</h1>
+          <p style="font-size: 0.9rem; color: var(--color-text-subtle);" id="dashboard-user-email">Client Portal</p>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem;">
+        <a href="therapists.html" class="btn btn-primary">+ Book New Session</a>
+      </div>
+    </div>
+
+    <!-- Dashboard Tabs -->
+    <div class="dashboard-tabs">
+      <button class="tab-btn active" data-tab="upcoming" onclick="switchDashboardTab('upcoming')">Upcoming
+        Sessions</button>
+      <button class="tab-btn" data-tab="past" onclick="switchDashboardTab('past')">Past History</button>
+      <button class="tab-btn" data-tab="saved" onclick="switchDashboardTab('saved')">Saved Therapists</button>
+    </div>
+
+    <!-- Dynamic Tab Content Area -->
+    <div id="dashboard-tab-content">
+      <!-- Rendered dynamically -->
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo" style="color: #FFFFFF;">MYTRM<span class="dot"></span></a>
+          <p>A modern mental health platform empowering young adults in India with accessible, warm, and confidential
+            therapy.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="therapists.html">Find Therapists</a></li>
+            <li><a href="dashboard.html">Client Dashboard</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Specializations</h4>
+          <ul class="footer-links">
+            <li><a href="therapists.html?category=anxiety">Anxiety & Panic</a></li>
+            <li><a href="therapists.html?category=stress">Work Stress & Burnout</a></li>
+            <li><a href="therapists.html?category=relationships">Relationships</a></li>
+            <li><a href="therapists.html?category=self-esteem">Self-Esteem</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Account & Legal</h4>
+          <ul class="footer-links">
+            <li><a href="login.html">Client Login</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+            <li><a href="contact.html">Therapist Partnership</a></li>
+            <li><a href="contact.html">Privacy & Security</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 MYTRM Health Technologies Pvt. Ltd. All rights reserved.</div>
+        <div>Made with care for India's youth.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      protectRoute(["USER"]);
+      const session = getCurrentSession();
+      if (session) {
+        document.getElementById("dashboard-user-greeting").innerText = `Welcome back, ${session.name}!`;
+        document.getElementById("dashboard-user-email").innerText = `${session.email} • Client Portal`;
+        if (session.photoUrl) {
+          document.getElementById("user-avatar-img").src = session.photoUrl;
+        }
+      }
+      switchDashboardTab("upcoming");
+    });
+
+    async function switchDashboardTab(tab) {
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-tab") === tab);
+      });
+
+      const contentArea = document.getElementById("dashboard-tab-content");
+      const session = getCurrentSession();
+      const email = session ? session.email : "user@mytrm.in";
+
+      if (tab === "upcoming") {
+        contentArea.innerHTML = `<div style="text-align: center; padding: 3rem;">Loading upcoming sessions from database...</div>`;
+
+        const bookings = await apiGetUserBookings(email);
+
+        if (!bookings || bookings.length === 0) {
+          contentArea.innerHTML = `
+            <div style="text-align: center; padding: 3rem 1rem; background: var(--color-bg-card); border-radius: var(--radius-md); border: 1px dashed var(--color-border);">
+              <h4>No Upcoming Sessions</h4>
+              <p style="margin-bottom: 1.5rem;">Explore our verified psychologists and schedule your next session.</p>
+              <a href="therapists.html" class="btn btn-primary">Find a Therapist</a>
+            </div>
+          `;
+          return;
+        }
+
+        const doctors = await apiGetDoctors();
+        const waNumber = typeof MYTRM_WHATSAPP_NUMBER !== "undefined" ? MYTRM_WHATSAPP_NUMBER : "919876543210";
+
+        contentArea.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+            ${bookings.map(b => {
+          const doc = doctors.find(d => String(d.id) === String(b.doctorId)) || doctors[0];
+          const docName = doc ? doc.name : (b.therapistName || 'Neetee Bhardwaj');
+          const docPhoto = doc ? (doc.photoUrl || doc.photo) : (b.therapistPhoto || 'assets/doctors/IMG_6971 - Neetee Bhardwaj.jpeg');
+          const statusStr = String(b.status || 'pending_payment').toLowerCase();
+
+          let badgeHTML = `<span class="badge badge-warning">Pending Payment</span>`;
+          let actionHTML = ``;
+
+          if (statusStr === "confirmed") {
+            badgeHTML = `<span class="badge badge-success">✓ Confirmed</span>`;
+            actionHTML = `
+                  <a href="${b.meetLink || 'https://meet.google.com/mytrm-session-room'}" target="_blank" class="btn btn-primary">
+                    🎥 Join Google Meet
+                  </a>
+                `;
+          } else if (statusStr === "pending_payment") {
+            badgeHTML = `<span class="badge badge-warning">Pending Payment — Complete on WhatsApp</span>`;
+            const msg = `Hi MYTRM, following up on booking ${b.id} with ${docName} on ${b.date} at ${b.time}.`;
+            const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
+            actionHTML = `
+                  <a href="${waUrl}" target="_blank" class="btn btn-primary" style="background-color:#25D366; border-color:#25D366; color:#FFF; display:inline-flex; align-items:center; gap:0.4rem;">
+                    <img src="assets/icons/whatsapp.svg" alt="WhatsApp" style="width: 18px; height: 18px; display: block;" /> Complete Payment on WhatsApp
+                  </a>
+                `;
+          } else if (statusStr === "cancelled") {
+            badgeHTML = `<span class="badge badge-sand">Cancelled</span>`;
+            actionHTML = `<span style="font-size:0.85rem; color:var(--color-text-subtle);">Booking Cancelled</span>`;
+          }
+
+          return `
+                <div class="card" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; opacity: ${statusStr === 'cancelled' ? 0.6 : 1};">
+                  <div style="display: flex; align-items: center; gap: 1.25rem;">
+                    <img src="${docPhoto}" alt="Doctor" style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover;" />
+                    <div>
+                      <div style="margin-bottom: 0.35rem;">${badgeHTML}</div>
+                      <h3 style="font-size: 1.15rem; margin: 0;">${docName}</h3>
+                      <p style="font-size: 0.85rem; color: var(--color-text-subtle);">${doc ? doc.title : 'Senior Psychologist'}</p>
+                      <div style="font-size: 0.9rem; font-weight: 600; color: var(--color-text-main); margin-top: 0.4rem;">
+                        📅 ${b.date} at ${b.time} &bull; ${b.sessionType || '1-on-1 Session'}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    ${actionHTML}
+                  </div>
+                </div>
+              `;
+        }).join("")}
+          </div>
+        `;
+      } else if (tab === "past") {
+        contentArea.innerHTML = `
+          <div class="card" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 1.25rem;">
+              <img src="assets/doctors/photo-1 - Pratosh Kamal Das.jpg" alt="Pratosh Kamal Das" style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover;" />
+              <div>
+                <span class="badge badge-sand" style="margin-bottom: 0.35rem;">Completed &bull; Sep 12, 2026</span>
+                <h3 style="font-size: 1.15rem; margin: 0;">Pratosh Kamal Das</h3>
+                <p style="font-size: 0.85rem; color: var(--color-text-subtle);">Counseling Psychologist</p>
+                <div style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.4rem;">
+                  Focus: Anger Management & Conflict Resolution
+                </div>
+              </div>
+            </div>
+
+            <a href="booking.html?id=d03" class="btn btn-outline btn-sm">Book Again</a>
+          </div>
+        `;
+      } else if (tab === "saved") {
+        const savedIds = getSavedTherapists();
+        const doctors = await apiGetDoctors();
+        const savedTherapists = doctors.filter(t => savedIds.includes(t.id));
+
+        if (savedTherapists.length === 0) {
+          contentArea.innerHTML = `
+            <div style="text-align: center; padding: 3rem 1rem; background: var(--color-bg-card); border-radius: var(--radius-md); border: 1px dashed var(--color-border);">
+              <h4>No Saved Therapists</h4>
+              <p style="margin-bottom: 1.5rem;">Bookmark therapists while browsing to quickly access them later.</p>
+              <a href="therapists.html" class="btn btn-primary">Browse Therapists</a>
+            </div>
+          `;
+          return;
+        }
+
+        contentArea.innerHTML = `
+          <div class="therapists-grid">
+            ${savedTherapists.map(t => renderTherapistCardHTML(t)).join("")}
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+
+</html>

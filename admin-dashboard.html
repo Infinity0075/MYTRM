@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal Dashboard — MYTRM</title>
+  <meta name="description" content="Manage doctor profiles, view system bookings, approve WhatsApp payments, and review contact submissions.">
+  
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo">
+        MYTRM<span class="dot"></span> <span class="badge badge-primary" style="font-size: 0.75rem;">ADMIN PORTAL</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="admin-dashboard.html" class="nav-link active">Admin Dashboard</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Rendered by auth.js -->
+        <button class="mobile-toggle" aria-label="Toggle drawer">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-overlay"></div>
+  <aside class="mobile-drawer">
+    <div>
+      <a href="index.html" class="brand-logo">MYTRM<span class="dot"></span></a>
+      <ul class="mobile-nav-links">
+        <li><a href="admin-dashboard.html">Admin Dashboard</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="container" style="padding-bottom: 5rem;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1>System Administration</h1>
+        <p style="color: var(--color-text-subtle);">Manage clinical practitioners, approve WhatsApp session payments, and inspect inquiries.</p>
+      </div>
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <button class="btn btn-primary" onclick="openDoctorModal()">+ Add New Doctor</button>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">Log Out</button>
+      </div>
+    </div>
+
+    <!-- Admin Tabs -->
+    <div class="dashboard-tabs" style="margin-top: 2rem;">
+      <button class="tab-btn active" data-tab="doctors" onclick="switchAdminTab('doctors')">Doctors Directory</button>
+      <button class="tab-btn" data-tab="bookings" onclick="switchAdminTab('bookings')">Bookings & Approvals</button>
+      <button class="tab-btn" data-tab="contact" onclick="switchAdminTab('contact')">Contact Submissions</button>
+    </div>
+
+    <!-- Tab Contents -->
+    <div id="admin-tab-content">
+      <!-- Rendered dynamically -->
+    </div>
+
+  </main>
+
+  <!-- Doctor Add/Edit Modal -->
+  <div id="doctor-modal-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1rem;">
+    <div class="card" style="width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h3 id="modal-title">Add New Practitioner</h3>
+        <button onclick="closeDoctorModal()" style="font-size: 1.5rem; background: none; border: none; cursor: pointer;">✕</button>
+      </div>
+
+      <form id="doctor-form" onsubmit="saveDoctorForm(event)">
+        <input type="hidden" id="doc-id" />
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" id="doc-name" class="form-control" placeholder="Dr. First Last" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Title / Role *</label>
+            <input type="text" id="doc-title" class="form-control" placeholder="Clinical Psychologist" required />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Doctor Login Email *</label>
+            <input type="email" id="doc-email" class="form-control" placeholder="doctor@mytrm.in" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Doctor Portal Password *</label>
+            <input type="password" id="doc-password" class="form-control" placeholder="doctor123" required />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Photo Filename (e.g. d01 - Neetee Bhardwaj.jpg)</label>
+            <input type="text" id="doc-photoFile" class="form-control" placeholder="d01 - Neetee Bhardwaj.jpg" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Photo URL / Path *</label>
+            <input type="text" id="doc-photoUrl" class="form-control" placeholder="assets/doctors/d01 - Neetee Bhardwaj.jpg" required />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Qualifications *</label>
+            <input type="text" id="doc-qualifications" class="form-control" placeholder="Masters in Clinical Psychology" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Experience (Years) *</label>
+            <input type="number" id="doc-experience" class="form-control" value="2" required />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <!-- PLACEHOLDER: Real doctor session pricing defaults to 'Contact for pricing' -->
+            <label class="form-label">Session Price *</label>
+            <input type="text" id="doc-price" class="form-control" value="Contact for pricing" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Session Duration *</label>
+            <input type="text" id="doc-sessionDuration" class="form-control" value="50 mins" required />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">City *</label>
+            <input type="text" id="doc-city" class="form-control" placeholder="New Delhi" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">State *</label>
+            <input type="text" id="doc-state" class="form-control" placeholder="Delhi" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Availability Summary *</label>
+          <input type="text" id="doc-availabilitySummary" class="form-control" placeholder="Mon to Fri • 3:00 PM - 7:00 PM" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Top Specializations (Semicolon separated, max 3-5 for cards) *</label>
+          <input type="text" id="doc-specializationsTop" class="form-control" placeholder="Anxiety & Panic; Work Stress; Self-Esteem & Identity" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Full Specializations (Semicolon separated, full profile list) *</label>
+          <input type="text" id="doc-specializationsFull" class="form-control" placeholder="Anxiety disorders; Sleep disorders; Stress management; Overthinking; OCD; Trauma" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Languages (Semicolon separated) *</label>
+          <input type="text" id="doc-languages" class="form-control" placeholder="Hindi; English; Punjabi" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Rating Badge / Tag (e.g. Verified Specialist, RCI Licensed)</label>
+          <input type="text" id="doc-ratingBadge" class="form-control" placeholder="Verified Specialist" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Biography (First-person intro) *</label>
+          <textarea id="doc-bio" class="form-control" style="min-height: 100px;" placeholder="Detailed practitioner biography..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Therapeutic Approach</label>
+          <input type="text" id="doc-approach" class="form-control" placeholder="Client-centered, empathetic, and evidence-based..." />
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeDoctorModal()">Cancel</button>
+          <button type="submit" id="save-doc-btn" class="btn btn-primary">Save Doctor Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Booking Approve Modal -->
+  <div id="approve-modal-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1rem;">
+    <div class="card" style="width: 100%; max-width: 500px;">
+      <h3 style="margin-bottom: 0.5rem;">Approve & Issue Meet Link</h3>
+      <p style="font-size: 0.9rem; color: var(--color-text-subtle); margin-bottom: 1.25rem;">
+        Paste the Google Meet event URL created after WhatsApp payment verification.
+      </p>
+
+      <input type="hidden" id="approve-booking-id" />
+      <div class="form-group">
+        <label class="form-label">Google Meet Video Link *</label>
+        <input type="url" id="approve-meet-link" class="form-control" placeholder="https://meet.google.com/abc-defg-hij" value="https://meet.google.com/abc-defg-hij" required />
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+        <button class="btn btn-secondary" onclick="closeApproveModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="confirmApproveBooking()">Approve & Confirm Session &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+    let currentTab = "doctors";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      protectRoute(["ADMIN"]);
+      loadAdminDoctors();
+    });
+
+    function switchAdminTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-tab") === tab);
+      });
+
+      if (tab === "doctors") loadAdminDoctors();
+      else if (tab === "bookings") loadAdminBookings();
+      else if (tab === "contact") loadAdminContact();
+    }
+
+    async function loadAdminDoctors() {
+      const container = document.getElementById("admin-tab-content");
+      container.innerHTML = `<div style="text-align: center; padding: 3rem;">Loading practitioners from database...</div>`;
+
+      const doctors = await apiGetDoctors();
+
+      container.innerHTML = `
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+          ${doctors.map(d => {
+            const fallbackImg = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800";
+            const photoSrc = d.photoUrl || d.photo || fallbackImg;
+            const feeText = (d.price && d.price !== "TBD" && !isNaN(Number(d.price))) ? `₹${d.price}` : "Contact for pricing";
+
+            return `
+              <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+                  <img src="${photoSrc}" alt="${d.name}" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" onerror="this.onerror=null; this.src='${fallbackImg}';" />
+                  <div>
+                    <h3 style="font-size: 1.05rem; margin: 0;">${d.name}</h3>
+                    <p style="font-size: 0.825rem; color: var(--color-text-subtle); margin: 0.15rem 0;">${d.title}</p>
+                    <span class="badge badge-sand" style="font-size: 0.75rem;">${d.ratingBadge || 'Verified Practitioner'}</span>
+                  </div>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.25rem;">
+                  <div><strong>ID:</strong> ${d.id} | <strong>Exp:</strong> ${d.experienceYears || 1} yrs</div>
+                  <div><strong>Email:</strong> ${d.email || 'Not set'}</div>
+                  <div><strong>Fee:</strong> ${feeText} / ${d.sessionDuration || '50 mins'}</div>
+                  <div><strong>Location:</strong> ${d.city ? d.city + ', ' + d.state : (d.location || 'India')}</div>
+                </div>
+                <div style="display: flex; gap: 0.5rem; border-top: 1px solid var(--color-border); padding-top: 1rem;">
+                  <button class="btn btn-secondary btn-sm" style="flex: 1;" onclick="openEditDoctorModal('${d.id}')">Edit</button>
+                  <button class="btn btn-outline btn-sm" style="color: #D32F2F; border-color: #D32F2F;" onclick="deleteDoctorClick('${d.id}', '${d.name}')">Delete</button>
+                </div>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    async function loadAdminBookings() {
+      const container = document.getElementById("admin-tab-content");
+      container.innerHTML = `<div style="text-align: center; padding: 3rem;">Loading all system bookings...</div>`;
+
+      const bookings = await apiGetAllBookings();
+
+      if (!bookings || bookings.length === 0) {
+        container.innerHTML = `<div style="text-align: center; padding: 3rem; background: var(--color-bg-card); border-radius: var(--radius-md);">No bookings recorded in database.</div>`;
+        return;
+      }
+
+      container.innerHTML = `
+        <div style="overflow-x: auto; margin-top: 1.5rem;">
+          <table style="width: 100%; border-collapse: collapse; background: var(--color-bg-card); border-radius: var(--radius-md); overflow: hidden; font-size: 0.875rem;">
+            <thead>
+              <tr style="background: var(--color-secondary-sand); text-align: left;">
+                <th style="padding: 1rem;">Booking ID</th>
+                <th style="padding: 1rem;">Client Email</th>
+                <th style="padding: 1rem;">Doctor ID</th>
+                <th style="padding: 1rem;">Date & Time</th>
+                <th style="padding: 1rem;">Status</th>
+                <th style="padding: 1rem;">Meet Link</th>
+                <th style="padding: 1rem; text-align: right;">Approval Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${bookings.map(b => {
+                const isPending = String(b.status).toLowerCase() === "pending_payment";
+                const isConfirmed = String(b.status).toLowerCase() === "confirmed";
+
+                let badgeClass = "badge-warning";
+                if (isConfirmed) badgeClass = "badge-success";
+                else if (b.status === "cancelled") badgeClass = "badge-sand";
+
+                return `
+                  <tr style="border-bottom: 1px solid var(--color-border);">
+                    <td style="padding: 1rem; font-weight: 700; color: var(--color-primary);">${b.id}</td>
+                    <td style="padding: 1rem;">${b.userEmail}</td>
+                    <td style="padding: 1rem;">${b.doctorId}</td>
+                    <td style="padding: 1rem;">${b.date} ${b.time}</td>
+                    <td style="padding: 1rem;"><span class="badge ${badgeClass}">${b.status}</span></td>
+                    <td style="padding: 1rem;">
+                      ${b.meetLink ? `<a href="${b.meetLink}" target="_blank" style="color: var(--color-primary); font-weight: 600;">Join Meet</a>` : '<span style="color:var(--color-text-subtle);">-</span>'}
+                    </td>
+                    <td style="padding: 1rem; text-align: right;">
+                      ${isPending ? `
+                        <div style="display: flex; gap: 0.4rem; justify-content: flex-end;">
+                          <button class="btn btn-primary btn-sm" onclick="openApproveModal('${b.id}')">Approve & Confirm</button>
+                          <button class="btn btn-outline btn-sm" style="color: #D32F2F; border-color: #D32F2F;" onclick="rejectBookingClick('${b.id}')">Reject</button>
+                        </div>
+                      ` : `
+                        <span style="font-size: 0.8rem; color: var(--color-text-subtle);">Reviewed</span>
+                      `}
+                    </td>
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    async function loadAdminContact() {
+      const container = document.getElementById("admin-tab-content");
+      container.innerHTML = `<div style="text-align: center; padding: 3rem;">Loading contact submissions...</div>`;
+
+      const list = await apiFetch("getContactSubmissions").then(res => res.data || []);
+
+      if (!list || list.length === 0) {
+        container.innerHTML = `<div style="text-align: center; padding: 3rem; background: var(--color-bg-card); border-radius: var(--radius-md);">No contact form submissions recorded.</div>`;
+        return;
+      }
+
+      container.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+          ${list.map(c => `
+            <div class="card">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <strong>${c.name} (${c.email})</strong>
+                <span class="badge badge-sand">${c.subject || 'General'}</span>
+              </div>
+              <p style="font-size: 0.95rem; color: var(--color-text-main); margin-bottom: 0.5rem;">"${c.message}"</p>
+              <div style="font-size: 0.8rem; color: var(--color-text-subtle);">${c.submittedAt || ''}</div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // Modal Handlers
+    function openApproveModal(bookingId) {
+      document.getElementById("approve-booking-id").value = bookingId;
+      document.getElementById("approve-modal-overlay").style.display = "flex";
+    }
+
+    function closeApproveModal() {
+      document.getElementById("approve-modal-overlay").style.display = "none";
+    }
+
+    async function confirmApproveBooking() {
+      const bookingId = document.getElementById("approve-booking-id").value;
+      const meetLink = document.getElementById("approve-meet-link").value.trim();
+
+      if (!meetLink) {
+        showToast("Please enter a valid Google Meet URL", "warning");
+        return;
+      }
+
+      const res = await apiUpdateBookingStatus(bookingId, "confirmed", meetLink);
+      if (res.success) {
+        showToast("Booking approved! Status updated to confirmed.");
+        closeApproveModal();
+        loadAdminBookings();
+      } else {
+        showToast(res.error || "Approval failed", "warning");
+      }
+    }
+
+    async function rejectBookingClick(bookingId) {
+      if (confirm("Reject this booking request? Status will change to cancelled.")) {
+        const res = await apiUpdateBookingStatus(bookingId, "cancelled");
+        if (res.success) {
+          showToast("Booking rejected");
+          loadAdminBookings();
+        } else {
+          showToast(res.error || "Rejection failed", "warning");
+        }
+      }
+    }
+
+    function openDoctorModal() {
+      document.getElementById("modal-title").innerText = "Add New Practitioner";
+      document.getElementById("doctor-form").reset();
+      document.getElementById("doc-id").value = "";
+      document.getElementById("doc-email").value = "doctor" + Math.floor(Math.random()*100) + "@mytrm.in";
+      document.getElementById("doc-password").value = "doctor123";
+      document.getElementById("doctor-modal-overlay").style.display = "flex";
+    }
+
+    async function openEditDoctorModal(id) {
+      const doctors = await apiGetDoctors();
+      const doc = doctors.find(d => String(d.id).toLowerCase() === String(id).toLowerCase());
+      if (!doc) return;
+
+      document.getElementById("modal-title").innerText = "Edit Practitioner Profile";
+      document.getElementById("doc-id").value = doc.id;
+      document.getElementById("doc-name").value = doc.name;
+      document.getElementById("doc-title").value = doc.title;
+      document.getElementById("doc-email").value = doc.email || "";
+      document.getElementById("doc-password").value = doc.password || "doctor123";
+      document.getElementById("doc-photoFile").value = doc.photoFile || (doc.photoUrl ? doc.photoUrl.split('/').pop() : "");
+      document.getElementById("doc-photoUrl").value = doc.photoUrl || doc.photo || "";
+      document.getElementById("doc-qualifications").value = doc.qualification || doc.qualifications || "";
+      document.getElementById("doc-experience").value = doc.experienceYears || 1;
+      document.getElementById("doc-price").value = doc.price || "Contact for pricing";
+      document.getElementById("doc-sessionDuration").value = doc.sessionDuration || "50 mins";
+      document.getElementById("doc-city").value = doc.city || "";
+      document.getElementById("doc-state").value = doc.state || "";
+      document.getElementById("doc-specializationsTop").value = Array.isArray(doc.specializationsTop) ? doc.specializationsTop.join("; ") : (doc.specializationsTop || (Array.isArray(doc.specializations) ? doc.specializations.join("; ") : doc.specializations || ""));
+      document.getElementById("doc-specializationsFull").value = Array.isArray(doc.specializationsFull) ? doc.specializationsFull.join("; ") : (doc.specializationsFull || (Array.isArray(doc.specializationsTop) ? doc.specializationsTop.join("; ") : doc.specializationsTop || ""));
+      document.getElementById("doc-languages").value = Array.isArray(doc.languages) ? doc.languages.join("; ") : doc.languages || "";
+      document.getElementById("doc-ratingBadge").value = doc.ratingBadge || "Verified Specialist";
+      document.getElementById("doc-bio").value = doc.bio || "";
+      document.getElementById("doc-approach").value = doc.approach || "";
+
+      document.getElementById("doctor-modal-overlay").style.display = "flex";
+    }
+
+    function closeDoctorModal() {
+      document.getElementById("doctor-modal-overlay").style.display = "none";
+    }
+
+    async function saveDoctorForm(e) {
+      e.preventDefault();
+      const id = document.getElementById("doc-id").value;
+      const photoFile = document.getElementById("doc-photoFile").value.trim();
+      let photoUrl = document.getElementById("doc-photoUrl").value.trim();
+      if (!photoUrl && photoFile) {
+        photoUrl = `assets/doctors/${photoFile}`;
+      }
+
+      const data = {
+        id: id || undefined,
+        name: document.getElementById("doc-name").value.trim(),
+        title: document.getElementById("doc-title").value.trim(),
+        email: document.getElementById("doc-email").value.trim(),
+        password: document.getElementById("doc-password").value.trim(),
+        photoFile: photoFile,
+        photoUrl: photoUrl,
+        qualifications: document.getElementById("doc-qualifications").value.trim(),
+        experienceYears: Number(document.getElementById("doc-experience").value) || 1,
+        price: document.getElementById("doc-price").value.trim(),
+        sessionDuration: document.getElementById("doc-sessionDuration").value.trim(),
+        city: document.getElementById("doc-city").value.trim(),
+        state: document.getElementById("doc-state").value.trim(),
+        availabilitySummary: document.getElementById("doc-availabilitySummary").value.trim(),
+        specializationsTop: document.getElementById("doc-specializationsTop").value.trim(),
+        specializationsFull: document.getElementById("doc-specializationsFull").value.trim(),
+        languages: document.getElementById("doc-languages").value.trim(),
+        ratingBadge: document.getElementById("doc-ratingBadge").value.trim(),
+        bio: document.getElementById("doc-bio").value.trim(),
+        approach: document.getElementById("doc-approach").value.trim()
+      };
+
+      const btn = document.getElementById("save-doc-btn");
+      btn.innerText = "Saving...";
+      btn.disabled = true;
+
+      let res = id ? await apiUpdateDoctor(data) : await apiAddDoctor(data);
+
+      btn.disabled = false;
+      btn.innerText = "Save Doctor Profile";
+
+      if (res.success) {
+        showToast(id ? "Doctor profile updated!" : "Doctor added successfully!");
+        closeDoctorModal();
+        loadAdminDoctors();
+      } else {
+        showToast(res.error || "Failed to save doctor", "warning");
+      }
+    }
+
+    async function deleteDoctorClick(id, name) {
+      if (confirm(`Are you sure you want to delete ${name}? This action cannot be undone.`)) {
+        const res = await apiDeleteDoctor(id);
+        if (res.success) {
+          showToast("Doctor deleted successfully");
+          loadAdminDoctors();
+        } else {
+          showToast(res.error || "Delete failed", "warning");
+        }
+      }
+    }
+  </script>
+</body>
+</html>

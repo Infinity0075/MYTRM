@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Your Account — MYTRM</title>
+  <meta name="description" content="Sign up for MYTRM to start your journey towards comfortable, confidential online therapy.">
+  
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo">
+        MYTRM<span class="dot"></span>
+      </a>
+
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-ghost">Already have an account? Log in</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="auth-wrapper" style="padding: 3rem 1rem;">
+    <div class="auth-card" style="max-width: 520px;">
+      <div class="auth-header">
+        <a href="index.html" class="brand-logo" style="justify-content: center; margin-bottom: 0.75rem;">MYTRM<span class="dot"></span></a>
+        <h1>Create Your Client Account</h1>
+        <p style="font-size: 0.95rem;">Join over 12,000+ young adults prioritizing mental wellness.</p>
+      </div>
+
+      <form id="signup-form" onsubmit="handleSignupSubmit(event)" novalidate>
+        <div class="form-group">
+          <label for="signup-name" class="form-label">Full Name *</label>
+          <input type="text" id="signup-name" class="form-control" placeholder="Enter your full name" autocomplete="name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="signup-email" class="form-label">Email Address *</label>
+          <input type="email" id="signup-email" class="form-control" placeholder="Enter your email address" autocomplete="email" required />
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="signup-pass" class="form-label">Password *</label>
+            <input type="password" id="signup-pass" class="form-control" placeholder="Enter your password" autocomplete="new-password" required minlength="6" />
+          </div>
+          <div class="form-group">
+            <label for="signup-confirm-pass" class="form-label">Confirm Password *</label>
+            <input type="password" id="signup-confirm-pass" class="form-control" placeholder="Re-enter your password" autocomplete="new-password" required minlength="6" />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="signup-phone" class="form-label">Phone Number *</label>
+            <input type="tel" id="signup-phone" class="form-control" placeholder="Enter your phone number" autocomplete="tel" required />
+          </div>
+          <div class="form-group">
+            <label for="signup-dob" class="form-label">Date of Birth (Optional)</label>
+            <input type="date" id="signup-dob" class="form-control" />
+          </div>
+        </div>
+
+        <!-- Profile Photo Selection (URL or File Upload base64) -->
+        <div class="form-group" style="background: var(--color-bg-page); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
+          <label class="form-label" style="margin-bottom: 0.5rem; display: block;">Profile Photo (Optional)</label>
+          
+          <div style="display: flex; gap: 1rem; margin-bottom: 0.75rem;">
+            <label class="checkbox-label" style="font-size: 0.85rem;">
+              <input type="radio" name="photoType" value="url" checked onchange="togglePhotoInput('url')" /> Paste Image URL
+            </label>
+            <label class="checkbox-label" style="font-size: 0.85rem;">
+              <input type="radio" name="photoType" value="file" onchange="togglePhotoInput('file')" /> Upload File
+            </label>
+          </div>
+
+          <div id="photo-url-container">
+            <input type="url" id="signup-photo-url" class="form-control" placeholder="https://images.unsplash.com/photo-..." />
+          </div>
+
+          <div id="photo-file-container" style="display: none;">
+            <!-- NOTE: Base64 encoding in Google Sheets is suitable for small image files in demo MVPs. For production scale, use Cloudinary or Google Drive API. -->
+            <input type="file" id="signup-photo-file" class="form-control" accept="image/*" onchange="handleFileSelect(event)" />
+            <small style="font-size: 0.75rem; color: var(--color-text-subtle); margin-top: 0.25rem; display: block;">File converts to compressed preview for your profile.</small>
+          </div>
+
+          <div id="photo-preview-box" style="margin-top: 0.75rem; display: none; align-items: center; gap: 0.75rem;">
+            <img id="photo-preview-img" src="" alt="Preview" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;" />
+            <span style="font-size: 0.8rem; color: var(--color-success); font-weight: 600;">✓ Photo Ready</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.25rem;">
+          <label class="checkbox-label" style="font-size: 0.8rem; align-items: flex-start;">
+            <input type="checkbox" id="signup-terms" required style="margin-top: 0.15rem;" />
+            <span>I agree to MYTRM's <a href="contact.html" style="color: var(--color-primary); font-weight: 600;">Terms of Service</a> and <a href="contact.html" style="color: var(--color-primary); font-weight: 600;">Privacy Policy</a>.</span>
+          </label>
+        </div>
+
+        <button type="submit" id="signup-submit-btn" class="btn btn-primary btn-lg btn-full">
+          Create Client Account &rarr;
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        Already registered? <a href="login.html?role=user" style="color: var(--color-primary); font-weight: 700;">Log in here</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+    let base64PhotoStr = "";
+
+    function togglePhotoInput(type) {
+      document.getElementById("photo-url-container").style.display = type === "url" ? "block" : "none";
+      document.getElementById("photo-file-container").style.display = type === "file" ? "block" : "none";
+    }
+
+    function handleFileSelect(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          base64PhotoStr = evt.target.result;
+          document.getElementById("photo-preview-img").src = base64PhotoStr;
+          document.getElementById("photo-preview-box").style.display = "flex";
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    async function handleSignupSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById("signup-name").value.trim();
+      const email = document.getElementById("signup-email").value.trim();
+      const pass = document.getElementById("signup-pass").value.trim();
+      const confirmPass = document.getElementById("signup-confirm-pass").value.trim();
+      const phone = document.getElementById("signup-phone").value.trim();
+      const dob = document.getElementById("signup-dob").value;
+      const urlPhoto = document.getElementById("signup-photo-url").value.trim();
+
+      const photoUrl = base64PhotoStr || urlPhoto || "";
+
+      if (!name || !email || !pass || !phone) {
+        showToast("Please fill in all required fields", "warning");
+        return;
+      }
+
+      if (pass !== confirmPass) {
+        showToast("Passwords do not match! Please check again.", "warning");
+        document.getElementById("signup-confirm-pass").focus();
+        return;
+      }
+
+      const btn = document.getElementById("signup-submit-btn");
+      btn.innerText = "Registering Account...";
+      btn.disabled = true;
+
+      const res = await apiRegisterUser({ name, email, password: pass, phone, dob, photoUrl });
+
+      btn.disabled = false;
+      btn.innerText = "Create Client Account →";
+
+      if (res.success && res.user) {
+        setSession(res.user);
+        showToast("Account created successfully!");
+        setTimeout(() => {
+          window.location.href = "login.html?role=user&registered=true";
+        }, 500);
+      } else {
+        showToast(res.error || "Registration failed", "warning");
+      }
+    }
+  </script>
+</body>
+</html>

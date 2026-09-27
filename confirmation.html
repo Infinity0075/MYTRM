@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Confirmed — MYTRM</title>
+  <meta name="description" content="Your therapy appointment has been confirmed. View session details and Google Meet link.">
+  
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo">
+        MYTRM<span class="dot"></span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="therapists.html" class="nav-link">Find Therapists</a></li>
+          <li><a href="about.html" class="nav-link">About Us & Support</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+          <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Rendered by auth.js -->
+        <button class="mobile-toggle" aria-label="Toggle drawer">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+    <div class="booking-container" style="max-width: 680px; margin: 0 auto; text-align: center;">
+      
+      <div style="width: 80px; height: 80px; background: var(--color-success-bg); color: var(--color-success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.5rem auto;">
+        ✓
+      </div>
+
+      <span class="badge badge-success" style="margin-bottom: 0.75rem;">Session Booked & Verified</span>
+      <h1 style="font-size: 2.25rem; margin-bottom: 0.5rem;">You're All Set!</h1>
+      <p style="font-size: 1.05rem; color: var(--color-text-muted); max-width: 500px; margin: 0 auto 2rem auto;">
+        Your consultation is confirmed. A calendar invite and Google Meet link have been issued.
+      </p>
+
+      <!-- Booking Info Card -->
+      <div class="card" style="text-align: left; margin-bottom: 2rem; border-color: var(--color-primary-light); background: #FFFFFF;">
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--color-text-subtle); margin-bottom: 1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.75rem;">
+          <span>Booking Reference</span>
+          <strong id="conf-id" style="color: var(--color-primary); font-family: var(--font-heading);">MYTRM-892301</strong>
+        </div>
+
+        <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.25rem;">
+          <img id="conf-doc-photo" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800" alt="Doctor" style="width: 54px; height: 54px; border-radius: 50%; object-fit: cover;" />
+          <div>
+            <h3 id="conf-doc-name" style="margin: 0; font-size: 1.15rem;">Neetee Bhardwaj</h3>
+            <span id="conf-doc-title" style="font-size: 0.85rem; color: var(--color-text-subtle);">Senior Clinical Psychologist</span>
+          </div>
+        </div>
+
+        <div style="background: var(--color-bg-page); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--color-border); font-size: 0.95rem; line-height: 1.8;">
+          <div>📅 <strong>Date & Time:</strong> Sep 28, 2026 at 05:00 PM (IST)</div>
+          <div>🎥 <strong>Format:</strong> 1-on-1 Encrypted Video Session</div>
+          <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+            <span>🔗 <strong>Google Meet URL:</strong></span>
+            <a id="conf-meet-link" href="https://meet.google.com/mytrm-session-room" target="_blank" class="btn btn-primary btn-sm">
+              Open Google Meet Room &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="dashboard.html" class="btn btn-primary btn-lg">View in Dashboard &rarr;</a>
+        <a href="index.html" class="btn btn-secondary btn-lg">Return Home</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>&copy; 2026 MYTRM Health Technologies Pvt. Ltd. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const bookingId = urlParams.get("bookingId") || "MYTRM-892301";
+      const docId = urlParams.get("docId") || "d01";
+      const meet = urlParams.get("meet") || "https://meet.google.com/mytrm-session-room";
+
+      document.getElementById("conf-id").innerText = bookingId;
+      document.getElementById("conf-meet-link").href = meet;
+
+      const doctors = await apiGetDoctors();
+      const doc = doctors.find(d => String(d.id) === String(docId)) || doctors[0];
+
+      if (doc) {
+        document.getElementById("conf-doc-name").innerText = doc.name;
+        document.getElementById("conf-doc-title").innerText = doc.title;
+        document.getElementById("conf-doc-photo").src = doc.photo;
+      }
+    });
+  </script>
+</body>
+</html>
